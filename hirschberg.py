@@ -14,7 +14,7 @@ class Hirschberg:
         self.final_alignment_strings_list = []  # The final alignment presented in strings for easy visualization
         self.column_dp = [[],
                           []]  # The space efficient 2 columns used for hirschberg DP recurrence with scoring function
-        self.backtrace_steps_map = {}  # Key is the step number: value is probably tuples to hirschberg functions etc to know each step process for visualization
+        self.backtrace_steps_map = {}  ## Key is the step number: value is probably tuples to hirschberg functions etc to know each step process for visualization
 
     @staticmethod
     def get_middle_j(j: int, j_plum: int) -> int:
@@ -156,18 +156,19 @@ class Hirschberg:
         if j_plum - j > 1:
             middle_j = Hirschberg.get_middle_j(j, j_plum)
             i_star, point_weight = self.argmax_weight(i, i_plum, j, j_plum, middle_j)
-            # self.report(i_star, middle_j, point_weight)
+            ## self.report(i_star, middle_j, point_weight)
             self.report(i_star, middle_j)
             self.hirschberg(i, j, i_star, middle_j)
             self.hirschberg(i_star, middle_j, i_plum, j_plum)
         else:  # Reporting the leave values of the Hirschberg Recursion tree
             self.report(i, j)
             self.report(i_plum, j_plum)
-            ## Extra Changes could be made here for more detailed examples of weights and even use for futher visualization enhancements
+            ## Extra Changes could be made here for more detailed examples of weights and even use for futher
+            ## visualization enhancements
             # self.report(i, j, '-')
             # self.report(i_plum, j_plum, '-')
 
-    def post_process_construct_hirschberg_alignment(self, alignment_tuples_list) -> list:
+    def post_process_construct_hirschberg_alignment(self, alignment_tuples_list: list) -> list:
         # Four different ways between points
         # Every tuple entry corresponds to a point in a single column. Go through all column points from the very end
         # to the start, if both points are not either linked exactly side by side (horizontally) nor diagonally. Then
@@ -290,7 +291,8 @@ class Hirschberg:
         # Reverse alignments back
         v_alignment_string = v_alignment_string[::-1]
         w_alignment_string = w_alignment_string[::-1]
-        return [v_alignment_string, w_alignment_string]
+        self.final_alignment_strings_list = [v_alignment_string, w_alignment_string]
+        return self.final_alignment_strings_list
 
     def run(self):
         print("======== Hirschberg Running =========\n")
@@ -321,11 +323,10 @@ if __name__ == "__main__":
         "gap": -1
     }
 
-
-    v = "ATGTC"
-    w = "ATCGC"
-    # v = "CT"
-    # w = "GCAT"
+    # v = "ATGTC"
+    # w = "ATCGC"
+    v = "CT"
+    w = "GCAT"
 
     Hirschberg_object = Hirschberg(v, w, scoring_map)
     Hirschberg_object.run()
